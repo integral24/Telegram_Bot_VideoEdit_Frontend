@@ -18,7 +18,6 @@ import {
 } from '../../../state/formSlice';
 
 const labelList: ICommon = {
-	getCourse: 'Ссылка на ГК:',
 	loading: 'Описание для загрузки на ГК:',
 	description: 'ТЗ, вырезки, комментарии:',
 	tags: 'Теги через пробел:',
@@ -34,6 +33,7 @@ export const PsiForm: React.FC<IProps> = (props): JSX.Element => {
 	const common = useAppSelector(selectorCommon);
 
 	const video = useAppSelector((state) => state.formSlice.video);
+	const getCourse = useAppSelector((state) => state.formSlice.getCourse);
 	const present = useAppSelector((state) => state.formSlice.present);
 	const extraPresent = useAppSelector((state) => state.formSlice.extraPresent);
 	const extraVideo = useAppSelector((state) => state.formSlice.extraVideo);
@@ -66,7 +66,14 @@ export const PsiForm: React.FC<IProps> = (props): JSX.Element => {
 	};
 
 	return (
-		<>
+		<>Ссылка на ГК:
+			<TextField
+				name="getCourse"
+				className="field"
+				plaseholder="getCourse"
+				setValue={(e) => inputHandler(e, 'getCourse')}
+				value={getCourse}
+			/>
 			<div className="dinamic-elements">
 				Ссылка на видео:
 				<div className="wrapper">

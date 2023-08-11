@@ -17,7 +17,6 @@ import {
 } from '../../../state/formSlice';
 
 const labelList: ICommon = {
-	getCourse: 'Ссылка на ГК:',
 	loading: 'Описание для загрузки на ГК:',
 	description: 'ТЗ, вырезки, комментарии:',
 	tags: 'Тэги через пробел:',

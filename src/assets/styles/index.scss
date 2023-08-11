@@ -47,7 +47,8 @@ body {
 	-webkit-user-select: auto !important;
 }
 ::-webkit-calendar-picker-indicator {
-	filter: invert(1);
+  background-color: $button-color;
+  cursor: pointer;
 }
 #root {
 	padding: 15px;
@@ -125,6 +126,7 @@ body {
 				border: 2px #a39ebe78 solid;
 				margin: 10px 0;
 				cursor: pointer;
+        background-color: $button-color;
 			}
 		}
 
@@ -213,19 +215,19 @@ body {
 	}
 }
 
-::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
-	background-color: color-mix(in srgb, $theme-bg-color 85%, #000 15%);
-}
-::-webkit-scrollbar-thumb {
-	background-color: color-mix(in srgb, $button-color 70%, #000 30%);
-	border-radius: 9em;
-	box-shadow: inset 1px 1px 10px #00000069;
-}
-::-moz-scrollbar-button:decrement,
-::-moz-scrollbar-button:increment,
-::-webkit-scrollbar-button:decrement,
-::-webkit-scrollbar-button:increment {
-	width: 0px;
-}
+// ::-webkit-scrollbar {
+// 	width: 8px;
+// 	height: 8px;
+// 	background-color: color-mix(in srgb, $theme-bg-color 85%, #000 15%);
+// }
+// ::-webkit-scrollbar-thumb {
+// 	background-color: color-mix(in srgb, $button-color 70%, #000 30%);
+// 	border-radius: 9em;
+// 	box-shadow: inset 1px 1px 10px #00000069;
+// }
+// ::-moz-scrollbar-button:decrement,
+// ::-moz-scrollbar-button:increment,
+// ::-webkit-scrollbar-button:decrement,
+// ::-webkit-scrollbar-button:increment {
+// 	width: 0px;
+// }

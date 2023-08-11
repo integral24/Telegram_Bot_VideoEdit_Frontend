@@ -123,9 +123,8 @@ export default formSlice.reducer;
 export const selectorCommon = createSelector(
 	(state: RootState) => state.formSlice,
 	(slice) => {
-		const { getCourse, description, loading, tags } = slice;
+		const {description, loading, tags } = slice;
 		return {
-			getCourse,
 			description,
 			loading,
 			tags,

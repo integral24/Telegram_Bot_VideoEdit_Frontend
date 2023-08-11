@@ -35,7 +35,6 @@ export type TUrgency = {
 };
 
 export interface ICommon {
-	getCourse: string;
 	loading: string;
 	description: string;
 	tags: string;
