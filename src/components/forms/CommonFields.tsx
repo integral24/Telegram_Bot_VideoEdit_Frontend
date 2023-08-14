@@ -30,14 +30,6 @@ export const CommonFields: FC<IProps> = (props): JSX.Element => {
 
 	return (
 		<>
-			Название урока:
-			<TextField
-				name="title"
-				className="field"
-				plaseholder="title"
-				value={title}
-				setValue={(e) => inputHandler(e, 'title')}
-			/>
 			<div className="fields-date">
 				<div className="fields-date__checkbox">
 					Срочность:
@@ -72,6 +64,14 @@ export const CommonFields: FC<IProps> = (props): JSX.Element => {
 					/>
 				</div>
 			</div>
+			Название урока:
+			<TextField
+				name="title"
+				className="field"
+				plaseholder="title"
+				value={title}
+				setValue={(e) => inputHandler(e, 'title')}
+			/>
 		</>
 	);
 };

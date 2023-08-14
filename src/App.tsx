@@ -40,7 +40,7 @@ function App() {
 				>
 					Психология
 				</button>
-				<button
+				{/* <button
 					onClick={() => setTypeForm('vill')}
 					className={cn({
 						btn: true,
@@ -48,13 +48,16 @@ function App() {
 					})}
 				>
 					Vill
-				</button>
+				</button> */}
 			</div>
 			{typeForm && (
 				<>
 					<h3>Форма для {nameForm[typeForm]}</h3>
 					<FormContainer typeForm={typeForm} />
+          <br></br>
+          <br></br>
 					<SendButton />
+          <br></br>
 				</>
 			)}
 		</div>
