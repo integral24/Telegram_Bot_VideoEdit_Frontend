@@ -11,7 +11,6 @@ const useDebounce = (delay: number, fn: Fn): Fn => {
 	return () => {
 		clearTimeout(timeOutId ?? undefined);
 		timeOutId = setTimeout(() => {
-			console.log('run fn debounced');
 			fn();
 		}, delay);
 	};

@@ -1,15 +1,17 @@
-import { IFormState } from '../types/propses';
+import { EForm, IFormState, IFormStateVill } from '../types/propses';
 
-export const ls = {
-	key: 'TG_WEBAPP_VALUE',
+export const ls = (departament: EForm) => {
+	const key = 'TG_WEBAPP_' + departament.toUpperCase();
 
-	get() {
-		return JSON.parse(localStorage.getItem(this.key)!);
-	},
-	set(value: IFormState) {
-		localStorage.setItem(this.key, JSON.stringify(value));
-	},
-	clear() {
-		localStorage.removeItem(this.key);
-	},
+	return {
+		get() {
+			return JSON.parse(localStorage.getItem(key)!);
+		},
+		set(value: IFormState | IFormStateVill) {
+			localStorage.setItem(key, JSON.stringify(value));
+		},
+		clear() {
+			localStorage.removeItem(key);
+		},
+	};
 };

@@ -1,9 +1,12 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './store';
-import { IFormState } from '../types/propses';
+import { EForm, IFormStateVill } from '../types/propses';
 import { ls } from '../utils/ls';
+import { getInitialDate } from '../utils/getInitialDate';
+import { getInitialTime } from '../utils/getInitialTime';
 
-const initialState: IFormState = {
+const initialState: IFormStateVill = {
+  isUrgency: false,
 	title: '',
 	time: '',
 	date: '',
@@ -12,21 +15,21 @@ const initialState: IFormState = {
 	present: '',
 	extraPresent: [],
 	getCourse: '',
-	loading: '',
 	description: '',
 	tags: '',
 };
-
-// state, action: PayloadAction<string>
 
 export const formSlice = createSlice({
 	name: 'form',
 
 	initialState,
 	reducers: {
-		setValue(
+    setIsUrgencyVill(state, action: PayloadAction<boolean>) {
+			state.isUrgency = action.payload;
+		},
+		setValueVill(
 			state,
-			action: PayloadAction<{ name: keyof IFormState; value: string }>
+			action: PayloadAction<{ name: keyof IFormStateVill; value: string }>
 		) {
 			const { name, value } = action.payload;
 			switch (name) {
@@ -48,9 +51,6 @@ export const formSlice = createSlice({
 				case 'getCourse':
 					state.getCourse = value;
 					break;
-				case 'loading':
-					state.loading = value;
-					break;
 				case 'description':
 					state.description = value;
 					break;
@@ -59,7 +59,7 @@ export const formSlice = createSlice({
 					break;
 			}
 		},
-		changeExtra(
+		changeExtraVill(
 			state,
 			action: PayloadAction<{
 				type: 'video' | 'present';
@@ -72,62 +72,75 @@ export const formSlice = createSlice({
 			if (type === 'present') state.extraPresent[idx] = value;
 		},
 
-		addExtraVideo(state) {
+		addExtraVideoVill(state) {
 			state.extraVideo.push('');
 		},
-		addExtraPresent(state) {
+		addExtraPresentVill(state) {
 			state.extraPresent.push('');
 		},
-		saveLocalstorage(state) {
+		saveToLocalstorageVill(state) {
 			const extraVideo = state.extraVideo.filter((el) => el !== '');
 			const extraPresent = state.extraPresent.filter((el) => el !== '');
-			ls.set({ ...state, extraPresent, extraVideo });
+			ls(EForm.VILL).set({ ...state, extraPresent, extraVideo });
 		},
-		setFromLocalstorage(state) {
-			const stateLs: IFormState = ls.get();
+		getFromLocalstorageVill(state) {
+			const stateLs: IFormStateVill = ls(EForm.VILL).get();
 			if (stateLs) {
 				Object.keys(stateLs).forEach((key) => {
-					const name = key as keyof IFormState;
+					const name = key as keyof IFormStateVill;
 					if (stateLs[name]) {
-						state[name] = stateLs[name] as string & string[];
+						state[name] = stateLs[name] as string & string[] & boolean;
 					}
 				});
-			}
+			} else {
+        state.date = getInitialDate(5);
+      }
 		},
-		clearState(state) {
+    setDateVill(state, action: PayloadAction<boolean>) {
+			state.date = action.payload ? getInitialDate(7) : '';			
+		},
+		setTimeVill(state, action: PayloadAction<boolean>) {
+			state.time = action.payload ? getInitialTime(7) : '';			
+		},
+		clearStateVill(state) {
 			Object.keys(state).forEach((key) => {
-				const name = key as keyof IFormState;
+				const name = key as keyof IFormStateVill;
 				if (name === 'extraPresent') state.extraPresent = [];
 				else if (name === 'extraVideo') state.extraVideo = [];
+				else if (name === 'isUrgency') state.isUrgency = false;
 				else {
 					state[name] = '';
 				}
 			});
-			ls.clear();
+			ls(EForm.VILL).clear();
 		},
 	},
 });
 
 export const {
-	addExtraVideo,
-	addExtraPresent,
-	changeExtra,
-	setValue,
-	saveLocalstorage,
-	setFromLocalstorage,
-	clearState,
+	addExtraVideoVill,
+	addExtraPresentVill,
+	changeExtraVill,
+	setValueVill,
+  setIsUrgencyVill,
+	saveToLocalstorageVill,
+	getFromLocalstorageVill,
+	clearStateVill,
+  setDateVill,
+  setTimeVill
 } = formSlice.actions;
 
 export default formSlice.reducer;
 
 export const selectorCommon = createSelector(
-	(state: RootState) => state.formSlice,
+	(state: RootState) => state.formSliceVill,
 	(slice) => {
-		const {description, loading, tags } = slice;
+		const { description, tags } = slice;
 		return {
 			description,
-			loading,
-			tags,
+			tags
 		};
 	}
 );
+
+

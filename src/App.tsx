@@ -1,38 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { FormContainer } from './components/formContainer';
-import { TForm } from './types/propses';
+import { EForm } from './types/propses';
 import { nameForm } from './constants';
 import { SendButton } from './components/sendButton';
 import { useAppDispatch } from './state/hookRtk';
-import { setFromLocalstorage } from './state/formSlice';
+import { getFromLocalstoragePsiho } from './state/formSlicePsiho';
+import { getFromLocalstorageVill } from './state/formSliceVill';
 
 function App() {
-	const [typeForm, setTypeForm] = useState<null | TForm>(null);
-
+	const [typeForm, setTypeForm] = useState<null | EForm>(null);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(setFromLocalstorage());
-
-		const script = document.createElement('script');
-
-		script.src = 'https://telegram.org/js/telegram-web-app.js';
-		script.async = true;
-		document.body.appendChild(script);
-
-		// window.Telegram?.utils.sessionStorageSet('web-app', '{value: ok}');
-
-		return () => {
-			document.body.removeChild(script);
-		};
-	}, [dispatch]);
+		if (typeForm === EForm.PSIHO) {
+			dispatch(getFromLocalstoragePsiho());
+		}
+		if (typeForm === EForm.VILL) {
+			dispatch(getFromLocalstorageVill());
+		}
+	}, [dispatch, typeForm]);
 
 	return (
 		<div id="form" className="app-form">
 			<div className="app-form__top-buttons">
 				<button
-					onClick={() => setTypeForm('psiho')}
+					onClick={() => setTypeForm(EForm.PSIHO)}
 					className={cn({
 						btn: true,
 						select: typeForm === 'psiho',
@@ -40,24 +33,24 @@ function App() {
 				>
 					Психология
 				</button>
-				{/* <button
-					onClick={() => setTypeForm('vill')}
+				<button
+					onClick={() => setTypeForm(EForm.VILL)}
 					className={cn({
 						btn: true,
 						select: typeForm === 'vill',
 					})}
 				>
 					Vill
-				</button> */}
+				</button>
 			</div>
 			{typeForm && (
 				<>
 					<h3>Форма для {nameForm[typeForm]}</h3>
 					<FormContainer typeForm={typeForm} />
-          <br></br>
-          <br></br>
-					<SendButton />
-          <br></br>
+					<br></br>
+					<br></br>
+					<SendButton departament={typeForm} />
+					<br></br>
 				</>
 			)}
 		</div>

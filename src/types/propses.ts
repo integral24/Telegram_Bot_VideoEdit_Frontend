@@ -4,6 +4,8 @@ export type TCnEvent = ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
 export type keyCommon = keyof ICommon;
 
+export type keyCommonVill = keyof ICommonVill;
+
 export interface IFieldProps {
 	type?: 'date' | 'time' | 'input';
 	name: string;
@@ -40,7 +42,10 @@ export interface ICommon {
 	tags: string;
 }
 
+export type ICommonVill = Omit<ICommon, 'loading'>;
+
 export interface IFormState {
+  isUrgency: boolean;
 	title: string;
 	time: string;
 	date: string;
@@ -48,12 +53,13 @@ export interface IFormState {
 	extraVideo: string[];
 	present: string;
 	extraPresent: string[];
-
 	getCourse: string;
 	loading: string;
 	description: string;
 	tags: string;
 }
+
+export type IFormStateVill = Omit<IFormState, 'loading'>;
 
 export type IParamsHandler =
 	| 'description'
@@ -65,4 +71,18 @@ export type IParamsHandler =
 	| 'extraVideo'
 	| 'extraPresent';
 
+export type IParamsHandlerVill =
+	| 'description'
+	| 'getCourse'
+	| 'tags'
+	| 'present'
+	| 'video'
+	| 'extraVideo'
+	| 'extraPresent';
+
 export type TForm = 'psiho' | 'vill';
+
+export enum EForm {
+	PSIHO = 'psiho',
+	VILL = 'vill',
+}

@@ -3,24 +3,27 @@ import { TextField } from '../../ui/TextField';
 import { AreaField } from '../../ui/AreaField';
 import {
 	ICommon,
+	ICommonVill,
 	IFelds,
 	IParamsHandler,
+	IParamsHandlerVill,
 	TCnEvent,
 	keyCommon,
+  keyCommonVill,
 } from '../../../types/propses';
 import { useAppDispatch, useAppSelector } from '../../../state/hookRtk';
 import {
-	addExtraVideoPsiho,
-	addExtraPresentPsiho,
-	changeExtraPsiho,
-	setValuePsiho,
+	addExtraVideoVill,
+	addExtraPresentVill,
+	changeExtraVill,
+	setValueVill,
 	selectorCommon,
-} from '../../../state/formSlicePsiho';
+} from '../../../state/formSliceVill';
 // import useDebounce from '../../../hooks/useDebounce';
 // import { AnyAction } from '@reduxjs/toolkit';
 
-const labelList: ICommon = {
-	loading: 'Описание для загрузки на ГК:',
+const labelList: ICommonVill = {
+
 	description: 'ТЗ, вырезки, комментарии:',
 	tags: 'Теги через пробел:',
 };
@@ -29,48 +32,48 @@ interface IProps {
 	debounceSaveLs: () => void;
 }
 
-export const PsiForm: React.FC<IProps> = (props): JSX.Element => {
+export const VillForm: React.FC<IProps> = (props): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const common = useAppSelector(selectorCommon);
-	const video = useAppSelector((state) => state.formSlicePsiho.video);
-	const getCourse = useAppSelector((state) => state.formSlicePsiho.getCourse);
-	const present = useAppSelector((state) => state.formSlicePsiho.present);
+	const video = useAppSelector((state) => state.formSliceVill.video);
+	const getCourse = useAppSelector((state) => state.formSliceVill.getCourse);
+	const present = useAppSelector((state) => state.formSliceVill.present);
 	const extraPresent = useAppSelector(
-		(state) => state.formSlicePsiho.extraPresent
+		(state) => state.formSliceVill.extraPresent
 	);
-	const extraVideo = useAppSelector((state) => state.formSlicePsiho.extraVideo);
+	const extraVideo = useAppSelector((state) => state.formSliceVill.extraVideo);
 
 	// const useDispachDebounce = (fn: () => any) => useDebounce(100, fn);
 
 	const inputHandler = (
 		event: TCnEvent,
-		name: IParamsHandler,
+		name: IParamsHandlerVill,
 		idx?: number
 	) => {
 		const { value } = event.target;
 
 		if (name === 'extraVideo' && typeof idx === 'number') {
 			// useDebounce(100, () =>
-				dispatch(changeExtraPsiho({ type: 'video', value, idx }))
+				dispatch(changeExtraVill({ type: 'video', value, idx }))
 			// )();
 			// useDispachDebounce(() =>
 			// 	dispatch(changeExtraPsiho({ type: 'video', value, idx }))
 			// );
 		} else if (name === 'extraPresent' && typeof idx === 'number') {
-			dispatch(changeExtraPsiho({ type: 'present', value, idx }));
+			dispatch(changeExtraVill({ type: 'present', value, idx }));
 		} else {
-			dispatch(setValuePsiho({ name, value }));
+			dispatch(setValueVill({ name, value }));
 		}
 		props.debounceSaveLs();
 	};
 
 	const addFieldHandler = (type: 'video' | 'present') => {
 		if (type === 'present' && extraPresent.length < 1) {
-			dispatch(addExtraPresentPsiho());
+			dispatch(addExtraPresentVill());
 		}
 
 		if (type === 'video' && extraVideo.length < 10) {
-			dispatch(addExtraVideoPsiho());
+			dispatch(addExtraVideoVill());
 		}
 	};
 
@@ -143,12 +146,12 @@ export const PsiForm: React.FC<IProps> = (props): JSX.Element => {
 				))}
 			</div>
 			{Object.keys(common).map((key: string) => {
-				return key === 'loading' || key === 'description' ? (
+				return key === 'description' ? (
 					<Fragment key={key}>
-						{labelList[key as keyCommon]}
+						{labelList[key as keyCommonVill]}
 						<AreaField
 							plaseholder={key}
-							value={common[key as keyCommon]}
+							value={common[key as keyCommonVill]}
 							setValue={(e) => inputHandler(e, key)}
 							name={key}
 							className="field area"
@@ -156,11 +159,11 @@ export const PsiForm: React.FC<IProps> = (props): JSX.Element => {
 					</Fragment>
 				) : (
 					<Fragment key={key}>
-						{labelList[key as keyCommon]}
+						{labelList[key as keyCommonVill]}
 						<TextField
 							plaseholder={key}
-							value={common[key as keyCommon]}
-							setValue={(e) => inputHandler(e, key as keyCommon)}
+							value={common[key as keyCommonVill]}
+							setValue={(e) => inputHandler(e, key as keyCommonVill)}
 							name={key as keyof IFelds}
 							className="field input"
 						/>
