@@ -22,8 +22,8 @@ import {
 // import useDebounce from '../../../hooks/useDebounce';
 // import { AnyAction } from '@reduxjs/toolkit';
 
-const labelList: ICommonVill = {
-
+const labelList: ICommon = {
+  loading: 'Описание для загрузки на ГК:',
 	description: 'ТЗ, вырезки, комментарии:',
 	tags: 'Теги через пробел:',
 };
@@ -146,12 +146,12 @@ export const VillForm: React.FC<IProps> = (props): JSX.Element => {
 				))}
 			</div>
 			{Object.keys(common).map((key: string) => {
-				return key === 'description' ? (
+				return key === 'loading' || key === 'description' ? (
 					<Fragment key={key}>
-						{labelList[key as keyCommonVill]}
+						{labelList[key as keyCommon]}
 						<AreaField
 							plaseholder={key}
-							value={common[key as keyCommonVill]}
+							value={common[key as keyCommon]}
 							setValue={(e) => inputHandler(e, key)}
 							name={key}
 							className="field area"
@@ -159,11 +159,11 @@ export const VillForm: React.FC<IProps> = (props): JSX.Element => {
 					</Fragment>
 				) : (
 					<Fragment key={key}>
-						{labelList[key as keyCommonVill]}
+						{labelList[key as keyCommon]}
 						<TextField
 							plaseholder={key}
-							value={common[key as keyCommonVill]}
-							setValue={(e) => inputHandler(e, key as keyCommonVill)}
+							value={common[key as keyCommon]}
+							setValue={(e) => inputHandler(e, key as keyCommon)}
 							name={key as keyof IFelds}
 							className="field input"
 						/>

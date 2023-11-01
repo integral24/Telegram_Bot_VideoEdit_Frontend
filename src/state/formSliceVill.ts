@@ -6,7 +6,7 @@ import { getInitialDate } from '../utils/getInitialDate';
 import { getInitialTime } from '../utils/getInitialTime';
 
 const initialState: IFormStateVill = {
-  isUrgency: false,
+	isUrgency: false,
 	title: '',
 	time: '',
 	date: '',
@@ -16,6 +16,7 @@ const initialState: IFormStateVill = {
 	extraPresent: [],
 	getCourse: '',
 	description: '',
+	loading: '',
 	tags: '',
 };
 
@@ -24,7 +25,7 @@ export const formSlice = createSlice({
 
 	initialState,
 	reducers: {
-    setIsUrgencyVill(state, action: PayloadAction<boolean>) {
+		setIsUrgencyVill(state, action: PayloadAction<boolean>) {
 			state.isUrgency = action.payload;
 		},
 		setValueVill(
@@ -56,6 +57,9 @@ export const formSlice = createSlice({
 					break;
 				case 'tags':
 					state.tags = value;
+					break;
+				case 'loading':
+					state.loading = value;
 					break;
 			}
 		},
@@ -93,14 +97,14 @@ export const formSlice = createSlice({
 					}
 				});
 			} else {
-        state.date = getInitialDate(5);
-      }
+				state.date = getInitialDate(5);
+			}
 		},
-    setDateVill(state, action: PayloadAction<boolean>) {
-			state.date = action.payload ? getInitialDate(7) : '';			
+		setDateVill(state, action: PayloadAction<boolean>) {
+			state.date = action.payload ? getInitialDate(7) : '';
 		},
 		setTimeVill(state, action: PayloadAction<boolean>) {
-			state.time = action.payload ? getInitialTime(7) : '';			
+			state.time = action.payload ? getInitialTime(7) : '';
 		},
 		clearStateVill(state) {
 			Object.keys(state).forEach((key) => {
@@ -122,12 +126,12 @@ export const {
 	addExtraPresentVill,
 	changeExtraVill,
 	setValueVill,
-  setIsUrgencyVill,
+	setIsUrgencyVill,
 	saveToLocalstorageVill,
 	getFromLocalstorageVill,
 	clearStateVill,
-  setDateVill,
-  setTimeVill
+	setDateVill,
+	setTimeVill,
 } = formSlice.actions;
 
 export default formSlice.reducer;
@@ -135,12 +139,11 @@ export default formSlice.reducer;
 export const selectorCommon = createSelector(
 	(state: RootState) => state.formSliceVill,
 	(slice) => {
-		const { description, tags } = slice;
+		const { description, tags, loading } = slice;
 		return {
 			description,
-			tags
+			loading,
+			tags,
 		};
 	}
 );
-
-

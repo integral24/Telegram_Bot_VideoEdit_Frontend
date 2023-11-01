@@ -42,7 +42,23 @@ export interface ICommon {
 	tags: string;
 }
 
-export type ICommonVill = Omit<ICommon, 'loading'>;
+// export type ICommonVill = Omit<ICommon, 'loading'>;
+// export type ICommonVill = ICommon;
+
+export interface ICommonVill {
+  isUrgency: boolean;
+	title: string;
+	time: string;
+	date: string;
+	video: string;
+	extraVideo: string[];
+	present: string;
+	extraPresent: string[];
+	getCourse: string;
+	loading: string;
+	description: string;
+	tags: string;
+}
 
 export interface IFormState {
   isUrgency: boolean;
@@ -59,7 +75,8 @@ export interface IFormState {
 	tags: string;
 }
 
-export type IFormStateVill = Omit<IFormState, 'loading'>;
+// export type IFormStateVill = Omit<IFormState, 'loading'>;
+export type IFormStateVill = IFormState;
 
 export type IParamsHandler =
 	| 'description'
@@ -75,6 +92,7 @@ export type IParamsHandlerVill =
 	| 'description'
 	| 'getCourse'
 	| 'tags'
+  | 'loading'
 	| 'present'
 	| 'video'
 	| 'extraVideo'
